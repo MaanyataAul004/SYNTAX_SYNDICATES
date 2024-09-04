@@ -145,3 +145,14 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+from django.contrib.sites.models import Site
+
+# Update the default site (id=1) or create a new one
+Site.objects.update_or_create(
+    id=1,
+    defaults={
+        'domain': '127.0.0.1:8000',  # Replace with your domain
+        'name': 'Your Site Name'
+    }
+)
+SITE_ID = 1
