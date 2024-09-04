@@ -166,7 +166,22 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # ... include the providers you want to enable:
     'allauth.socialaccount.providers.google',
+    # Other apps
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # Your apps
+    'auctions',  # Example app
+    # Allauth apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     
+
 ]
 
 MIDDLEWARE = (
