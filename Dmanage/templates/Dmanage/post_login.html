@@ -16,9 +16,12 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" crossorigin=""></script>
 
+<!-- Safely pass JSON data to JavaScript -->
+{{ reports|json_script:"reports_data" }}
+
 <script>
     // Initialize the map
-    var map = L.map('map').setView([20.5937, 78.9629], 5);  // [Latitude, Longitude], Zoom Level
+    var map = L.map('map').setView([20.5937, 78.9629], 5);  // Center on India, zoom level 5
 
     // Load OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -26,38 +29,28 @@
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Function to add markers for disaster reports
-    function addMarker(lat, lng, type, location) {
-        L.marker([lat, lng]).addTo(map)
-            .bindPopup(`<b>${type}</b><br>${location}`)
-            .openPopup();
-    }
+    // Fetch reports data from the template
+    var reports = JSON.parse(document.getElementById('reports_data').textContent);
 
-    // Fetch disaster reports from the Django backend
-    fetch("{% url 'disaster_reports_data' %}")
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(report => {
-                addMarker(report.latitude, report.longitude, report.disaster_type, report.location);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching disaster reports:', error);
-        });
+    // Check if reports data is available
+    console.log(reports);
 
-    // Optional: Get user's current location and add a marker for it
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
-            L.marker([lat, lng]).addTo(map)
-                .bindPopup(`<b>Your Location</b>`)
+    // Loop over the reports and add markers
+    reports.forEach(function(report) {
+        var latitude = report.fields.latitude;
+        var longitude = report.fields.longitude;
+        var disasterType = report.fields.disaster_type;
+        var location = report.fields.location;
+        
+        if (latitude && longitude) {
+            // Add marker to the map
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup(`<b>${disasterType}</b><br>${location}`)
                 .openPopup();
-        }, function(error) {
-            console.error('Error getting location:', error);
-        });
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
+        } else {
+            console.error(`Missing coordinates for location: ${location}`);
+        }
+    });
 </script>
+
 {% endblock %}

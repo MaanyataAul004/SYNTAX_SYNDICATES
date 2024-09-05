@@ -13,3 +13,4 @@ class DisasterReportForm(forms.ModelForm):
             'latitude': forms.HiddenInput(),  # Hidden fields for latitude
             'longitude': forms.HiddenInput(),  # Hidden fields for longitude
         }
+

@@ -60,16 +60,45 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request,"Dmanage/register.html")
+    
+
+from geopy.geocoders import Nominatim
+from django.shortcuts import render, redirect
+from .models import Disaster_report
+from .forms import DisasterReportForm
 
 @login_required
 def report_view(request):
     if request.method == 'POST':
         form = DisasterReportForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            # Get the disaster report but don't save it yet
+            disaster_report = form.save(commit=False)
+
+            # Geocode the location entered by the user
+            geolocator = Nominatim(user_agent="disaster_management")
+            location = geolocator.geocode(disaster_report.location)
+
+            if location:
+                # If geocoding is successful, set the latitude and longitude
+                disaster_report.latitude = location.latitude
+                disaster_report.longitude = location.longitude
+            else:
+                # If location is invalid, set default or raise an error
+                return render(request, 'Dmanage/report_form.html', {
+                    'form': form,
+                    'error_message': 'Could not find the location. Please enter a valid location.'
+                })
+
+            # Save the report with geocoded latitude and longitude
+            disaster_report.save()
             return redirect('report_success')
     else:
         form = DisasterReportForm()
+
+    return render(request, 'Dmanage/report_form.html', {'form': form})
+
+
     return render(request, 'Dmanage/report_form.html', {'form': form})
 
 def report_success_view(request):
@@ -85,9 +114,19 @@ def about(request):
 def contact(request):
     return render(request, 'Dmanage/contact.html')
 
+from django.core.serializers import serialize
+from .models import Disaster_report
+
 @login_required
 def post_login(request):
-    return render(request, 'Dmanage/post_login.html')
+    # Fetch all disaster reports
+    reports = Disaster_report.objects.all()
+    
+    # Serialize the reports into JSON format
+    reports_json = serialize('json', reports, fields=('latitude', 'longitude', 'disaster_type', 'location'))
+    
+    return render(request, 'Dmanage/post_login.html', {"reports": reports_json})
+
 
 
 from django.http import JsonResponse
