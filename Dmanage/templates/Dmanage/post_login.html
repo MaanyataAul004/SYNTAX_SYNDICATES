@@ -1,9 +1,55 @@
 {% extends "Dmanage/layout.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}
+    Disaster Management Map
+{% endblock %}
 
 {% block body %}
-<h1>
-    fill
-</h1>
+<h1>Disaster Map</h1>
+
+<!-- Map container where Leaflet will display the map -->
+<div id="map" style="height: 600px; width: 100%;"></div>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin=""/>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" crossorigin=""></script>
+
+<script>
+    // Initialize the map
+    var map = L.map('map').setView([20.5937, 78.9629], 5);  // [Latitude, Longitude], Zoom Level
+
+    // Load OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Function to add markers for disaster reports
+    function addMarker(lat, lng, type) {
+        L.marker([lat, lng]).addTo(map)
+            .bindPopup(`<b>${type}</b><br>Disaster reported here.`)
+            .openPopup();
+    }
+
+    // Get user's current location and update form fields
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            
+            // Set latitude and longitude fields in the form
+            document.getElementById('id_latitude').value = lat;
+            document.getElementById('id_longitude').value = lng;
+
+            // Add a marker for the user's current location
+            addMarker(lat, lng, "Your Location");
+        }, function(error) {
+            console.error('Error getting location:', error);
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+</script>
 {% endblock %}

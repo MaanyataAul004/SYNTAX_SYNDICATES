@@ -1,22 +1,48 @@
 {% extends "Dmanage/layout.html" %}
 
+{% block title %}
+    Report Disaster
+{% endblock %}
+
 {% block body %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report a Disaster</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <h1>Report a Disaster</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn">Submit Report</button>
-    </form>
-</body>
-</html>
+<h1>Report Disaster</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    // Function to get the user's current location and set it in the form fields
+    function setLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // Get the latitude and longitude from the position object
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+
+                // Set the latitude and longitude fields in the form
+                var latitudeField = document.getElementById('id_latitude');
+                var longitudeField = document.getElementById('id_longitude');
+                
+                if (latitudeField && longitudeField) {
+                    latitudeField.value = latitude;
+                    longitudeField.value = longitude;
+                } else {
+                    console.error('Latitude or Longitude fields are missing.');
+                }
+            }, function(error) {
+                console.error('Error getting location:', error);
+                alert('Unable to retrieve your location. Please enter the location manually.');
+            });
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+            alert('Geolocation is not supported by this browser. Please enter the location manually.');
+        }
+    }
+
+    // Set location when the page is loaded
+    document.addEventListener('DOMContentLoaded', setLocation);
+</script>
 {% endblock %}

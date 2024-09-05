@@ -1,37 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
-
-from .models import User
-
+from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
+from .models import User, Disaster_report
+from .forms import DisasterReportForm
 
 def index(request):
-    return render(request,"Dmanage/index.html")
-
-
-# def login_view(request):
-#     if request.method == "POST":
-
-#         # Attempt to sign user in
-#         username = request.POST["username"]
-#         password = request.POST["password"]
-#         user = authenticate(request, username=username, password=password)
-
-#         # Check if authentication successful
-#         if user is not None:
-#             login(request, user)
-#             return HttpResponseRedirect(reverse("index"))
-#         else:
-#             return render(request, "Dmanage/login.html", {
-#                 "message": "Invalid username and/or password."
-#             })
-#     else:
-#         return render(request,"Dmanage/login.html")
-
-
-from django.contrib.auth.decorators import login_required
+    reports = Disaster_report.objects.all()  # Fetch all disaster reports
+    reports_json = serialize('json', reports, fields=('latitude', 'longitude', 'disaster_type', 'location', 'description'))
+    return render(request, "Dmanage/index.html", {"reports": reports_json})
 
 def login_view(request):
     if request.method == "POST":
@@ -51,12 +31,9 @@ def login_view(request):
     else:
         return render(request, "Dmanage/login.html")
 
-
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
-
 
 def register(request):
     if request.method == "POST":
@@ -84,12 +61,7 @@ def register(request):
     else:
         return render(request,"Dmanage/register.html")
 
-
-from django.shortcuts import render, redirect
-from .forms import DisasterReportForm
-from .models import Disaster_report
-from django.http import HttpResponse
-
+@login_required
 def report_view(request):
     if request.method == 'POST':
         form = DisasterReportForm(request.POST, request.FILES)
@@ -108,17 +80,10 @@ def report_list_view(request):
     return render(request, 'Dmanage/report_list.html', {'reports': reports})
 
 def about(request):
-        #  return HttpResponse ("hello peeps")
     return render(request, 'Dmanage/about.html')
 
 def contact(request):
-    # return HttpResponse ("CALL ME")
     return render(request, 'Dmanage/contact.html')
-
-# def post_login(request):
-#     return render(request,'Dmanage/post_login.html')
-
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def post_login(request):

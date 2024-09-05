@@ -5,6 +5,8 @@ from django.db import models
 class User(AbstractUser):
     pass
 
+from django.db import models
+
 class Disaster_report(models.Model):
     Disaster_choices = [
         ('flood', 'Flood'),
@@ -23,6 +25,8 @@ class Disaster_report(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='report_images/', blank=True, null=True)
     reported_at = models.DateTimeField(auto_now_add=True)
+    latitude = models.FloatField()  # New field for latitude
+    longitude = models.FloatField()  # New field for longitude
 
     def __str__(self):
         return f"{self.disaster_type} happening at {self.location}"
