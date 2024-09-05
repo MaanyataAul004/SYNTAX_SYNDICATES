@@ -72,14 +72,14 @@ def report_view(request):
         form = DisasterReportForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('report_success')
+            return redirect('Dmanage/report_success')
     else:
         form = DisasterReportForm()
-    return render(request, 'report_form.html', {'form': form})
+    return render(request, 'Dmanage/report_form.html', {'form': form})
 
 def report_success_view(request):
-    return render(request, 'report_success.html')
+    return render(request, 'Dmanage/report_success.html')
 
 def report_list_view(request):
     reports = Disaster_report.objects.all().order_by('-reported_at')
-    return render(request, 'report_list.html', {'reports': reports})
+    return render(request, 'Dmanage/report_list.html', {'reports': reports})
