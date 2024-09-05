@@ -65,7 +65,7 @@ def register(request):
 
 from django.shortcuts import render, redirect
 from .forms import DisasterReportForm
-from .models import DisasterReport
+from .models import Disaster_report
 
 def report_view(request):
     if request.method == 'POST':
@@ -81,5 +81,5 @@ def report_success_view(request):
     return render(request, 'report_success.html')
 
 def report_list_view(request):
-    reports = DisasterReport.objects.all().order_by('-reported_at')
+    reports = Disaster_report.objects.all().order_by('-reported_at')
     return render(request, 'report_list.html', {'reports': reports})

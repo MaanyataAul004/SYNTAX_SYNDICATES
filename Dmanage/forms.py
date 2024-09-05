@@ -1,9 +1,9 @@
 from django import forms
-from .models import DisasterReport
+from .models import Disaster_report
 
 class DisasterReportForm(forms.ModelForm):
     class Meta:
-        model = DisasterReport
+        model = Disaster_report
         fields = ['disaster_type', 'location', 'description', 'image']
         widgets = {
             'disaster_type': forms.Select(attrs={'class': 'form-control'}),
