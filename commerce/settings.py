@@ -178,3 +178,5 @@ SOCIALACCOUNT_PROVIDERS = {
         
     }
 }
+
+DEBUG = True
