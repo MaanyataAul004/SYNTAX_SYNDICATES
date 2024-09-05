@@ -1,11 +1,27 @@
 
 
-{% block title %}{% endblock %}
+{% extends "Dmanage/layout.html" %}
+
+{% block title %}Contact Emergency Services:{% endblock %}
 
 {% block body %}
-   
-        <a class="nav-link" href="{% url 'index'%}">Home</a>
-       </div>
-       <h1>Call me</h1>
-       <div >
+<a class="nav-link" href="{% url 'index'%}">Home</a>
+<div class="container">
+    <h1>Contact Us</h1>
+    <p>
+        In the event of a disaster or emergency, please contact the National Disaster Management Authority (NDMA) for immediate assistance and coordination. Our platform provides real-time information to support your response efforts, but for direct emergency assistance, the NDMA is your primary point of contact.
+    </p>
+    <h2>Contact Information</h2>
+    <ul>
+        <li><strong>Emergency Response Number for India:</strong> 112</li>
+        <li><strong>Disaster Distress Helpline:</strong> +919711077372</li>
+        <li><strong>NDMA Office:</strong></li>
+        <ul>
+            <li>Phone: +91-11-26701700 (Mon-Fri - 9:30AM-6:00PM)</li>
+            <li>Control Room: +91-11-26701728 (Mon-Fri 24X7)</li>
+            <li>Fax: +91-11-26701729</li>
+        </ul>
+        <li><strong>National Disaster Management Authority of India</strong></li>
+    </ul>
+</div>
 {% endblock %}

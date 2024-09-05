@@ -1,11 +1,19 @@
 {% extends "Dmanage/layout.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}About Us{% endblock %}
 
 {% block body %}
-<div >
-    <a class="nav-link" href="{% url 'index'%}">Home</a>
-   </div>
-    <h1>Hello</h1>
-
+<div class="container">
+    <!-- <a class="nav-link" href="{% url 'index' %}">Home</a> -->
+    <h1>About Us:</h1>
+    <p>
+        Our idea is a crowdsourced disaster reporting tool that aims to improve real-time disaster awareness and response. It allows
+        users to report crucial circumstances like: fires, floods, earthquakes, and more via a web interface, ensuring that accurate 
+        and timely information is shared with emergency services and the general public. The platform's spam filtering and verification
+        method demands numerous reports from the same area before publishing, thereby reducing false alarms and ensuring only 
+        trustworthy data is posted. Once validated, reports are displayed on an interactive dashboard, providing a clear, real-time snapshot 
+        of disaster activities. Simultaneously, rapid alerts are delivered to users in affected areas and emergency services, allowing for 
+        quick action to limit damage and save lives. Our technology helps emergency services make faster, more informed decisions, eventually 
+        boosting community safety and optimizing emergency response efforts when they are most required.
+    </p>
 {% endblock %}

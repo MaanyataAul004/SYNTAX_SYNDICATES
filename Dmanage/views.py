@@ -23,7 +23,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("post_login"))  # Redirect to post_login
+            return HttpResponseRedirect(reverse("index"))  # Redirect to post_login
         else:
             return render(request, "Dmanage/login.html", {
                 "message": "Invalid username and/or password."

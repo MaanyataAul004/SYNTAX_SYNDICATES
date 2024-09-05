@@ -1,8 +1,105 @@
 {% extends "Dmanage/layout.html" %}
 
+{% block title %}Home{% endblock %}
+
 {% block body %}
 <h1>add stats</h1>
+<div class="content">
+    {% if user.is_authenticated %}
+        <h1>Welcome back, {{ user.username }}!</h1>
+        <p>
+            <a href="/report">
+                <button type="button" class="btn btn-danger">Report a Disaster</button>
+            </a>
+        </p>
+
+        <h1>Disaster Map</h1>
+
+        <!-- Map container where Leaflet will display the map -->
+        <div id="map" style="height: 600px; width: 100%;"></div>
+
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin=""/>
+
+        <!-- Leaflet JS -->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" crossorigin=""></script>
+
+        <!-- Safely pass JSON data to JavaScript -->
+        {{ reports|json_script:"reports_data" }}
+
+        <script>
+            // Initialize the map
+            var map = L.map('map').setView([20.5937, 78.9629], 5);  // Center on India, zoom level 5
+
+            // Load OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '©️ OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Fetch reports data from the template
+            var reports = JSON.parse(document.getElementById('reports_data').textContent);
+
+            // Check if reports data is available
+            console.log(reports);
+
+            // Loop over the reports and add markers
+            reports.forEach(function(report) {
+                var latitude = report.fields.latitude;
+                var longitude = report.fields.longitude;
+                var disasterType = report.fields.disaster_type;
+                var location = report.fields.location;
+                
+                if (latitude && longitude) {
+                    // Add marker to the map
+                    L.marker([latitude, longitude]).addTo(map)
+                        .bindPopup(`<b>${disasterType}</b><br>${location}`)
+                        .openPopup();
+                } else {
+                    console.error(`Missing coordinates for location: ${location}`);
+                }
+            });
+        </script>
+
+    {% else %}
+        <h1>Welcome to the Disaster Management Portal!</h1>
+        <p>Check out the significant disasters in India over the past decade:</p>
+        <h3>Statistics:</h3>
+        <ul>
+            <li>
+                <h4>Floods:</h4>
+                Uttarakhand (2013), Chennai (2015), Kerala (2018)
+            </li>
+            <li>
+                <h4>Cyclones:</h4>
+                Phailin (2013), Fani (2019), Amphan (2020)
+            </li>
+            <li>
+                <h4>Earthquakes:</h4>
+                Nepal (2015, affecting India), Assam (2021)
+            </li>
+            <li>
+                <h4>Heatwaves:</h4>
+                2015 and 2019, impacting various states
+            </li>
+            <li>
+                <h4>Droughts:</h4>
+                Maharashtra and Gujarat (2016, 2020)
+            </li>
+            <li>
+                <h4>Man-Made Disasters:</h4>
+                Vizag Gas Leak (2020), Uttarakhand Glacier Burst (2021)
+            </li>
+            <li>
+                <h4>Pandemic:</h4>
+                COVID-19 (2020-2022), with over 500,000 reported deaths in India
+            </li>
+            <li>...and more.</li>
+        </ul>
+    {% endif %}
+</div>
 {% endblock %}
+
 
 
 
