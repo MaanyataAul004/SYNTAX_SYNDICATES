@@ -88,3 +88,12 @@ def contact(request):
 @login_required
 def post_login(request):
     return render(request, 'Dmanage/post_login.html')
+
+
+from django.http import JsonResponse
+from .models import Disaster_report
+
+def disaster_reports_data(request):
+    reports = Disaster_report.objects.all().values('latitude', 'longitude', 'disaster_type', 'location')
+    return JsonResponse(list(reports), safe=False)
+

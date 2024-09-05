@@ -12,7 +12,9 @@ urlpatterns = [
     path('reports/', views.report_list_view, name="report_list"),
     path('about/',views.about, name="about"),
     path('contact',views.contact,name="contact"),
-    path('post_login', views.post_login, name="post_login")
+    path('post_login', views.post_login, name="post_login"),
+    path('disaster_reports_data/', views.disaster_reports_data, name='disaster_reports_data'),
+
 
 ]
 
