@@ -5,23 +5,20 @@ body {
     margin: 0;
 }
 
-.allitems{
-    display: flex;
-}
-
 .navbar{
+    padding: 0;
     color: white;
     height: 100px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
 }
 
 .nav-link{
     color: white;
     font-weight: 200;
     font-size: 18px;
-    margin-right: 2rem;
+    margin-right: 2px;
     transition: 0.5s ease-out;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -33,10 +30,19 @@ body {
 }
 
 .logo{
-    margin-left: 2%;
-    margin-right: 25%;
+    margin-left: 40px;
     background-image: url(logopage1.png);
     background-size: cover;
     height: 100px;
-    width: 105px;;
+    width: 100px;
+}
+
+.headingpage2{
+    text-align: center;
+}
+
+.centrelogin {
+    margin: 0 auto;
+    width: 50%; /* adjust the width as needed */
+    padding: 20px; /* add some padding */
 }

@@ -1,9 +1,15 @@
-{% extends "Dmanage/layout.html" %}
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 {% block body %}
-
-    <h2>Login</h2>
-
+<div class="centrelogin">
+    <h2 class="headingpage2">Log In</h2>
+    <br>
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
@@ -20,5 +26,7 @@
     </form>
 
     Don't have an account? <a href="{% url 'register' %}">Register here.</a>
-
+</div>
 {% endblock %}
+</body>
+</html>
