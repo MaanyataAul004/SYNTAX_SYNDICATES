@@ -9,16 +9,20 @@
     <title>Disaster Reports</title>
 </head>
 <body>
-    <h1>All Disaster Reports</h1>
-    <ul>
+    <div class="containerforreportlist">
+    <h1 class="headinginreport">All Disaster Reports</h1>
+    <ul class="listinreport">
         {% for report in reports %}
-            <li>
-                <strong>{{ report.disaster_type }}</strong> at {{ report.location }} <br>
-                <p>{{ report.description }}</p>
-                <small>Reported at: {{ report.reported_at }}</small>
-            </li>
+            <li class="listinsidereport"><div class="listinsidereportinner">
+                <strong>{{ report.disaster_type }}</strong> at {{ report.location }}
+                <p>{{ report.description }}
+                    <br>
+                <small>Reported on: {{ report.reported_at }}</small>
+                </p>
+            </div></li>
         {% endfor %}
     </ul>
+   </div>
 </body>
 </html>
 {% endblock %}
