@@ -3,13 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}Add title{% endblock %}</title>
+        <title>{% block title %}Disaster Reporting Tool{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
-    <body>    
+    <body>
+<div class="allitems">    
+    <div class="logo"></div>
     <div class="navbar">
-        <div class="logo"></div>
         <div class="nav-item">
             <a class="nav-link" href="#">Home</a>
            </div>
@@ -31,14 +32,14 @@
                 <a class="nav-link" href="{% url 'register' %}">Register</a>
             </div>
         {% endif %}
-    {% block body %}
-
-    {% endblock %}
         <div class="signedin">
             {% if user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
             {% endif %}
         </div>
-    </div>   
+    </div>
+</div>  
+{% block body %}
+{% endblock %}  
     </body>
 </html>
