@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.sites',
-    'auctions',
+    'Dmanage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
