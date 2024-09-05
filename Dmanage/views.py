@@ -61,3 +61,25 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request,"Dmanage/register.html")
+
+
+from django.shortcuts import render, redirect
+from .forms import DisasterReportForm
+from .models import DisasterReport
+
+def report_view(request):
+    if request.method == 'POST':
+        form = DisasterReportForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('report_success')
+    else:
+        form = DisasterReportForm()
+    return render(request, 'report_form.html', {'form': form})
+
+def report_success_view(request):
+    return render(request, 'report_success.html')
+
+def report_list_view(request):
+    reports = DisasterReport.objects.all().order_by('-reported_at')
+    return render(request, 'report_list.html', {'reports': reports})

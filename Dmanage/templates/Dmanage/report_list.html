@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Reports</title>
+</head>
+<body>
+    <h1>All Disaster Reports</h1>
+    <ul>
+        {% for report in reports %}
+            <li>
+                <strong>{{ report.disaster_type }}</strong> at {{ report.location }} <br>
+                <p>{{ report.description }}</p>
+                <small>Reported at: {{ report.reported_at }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
