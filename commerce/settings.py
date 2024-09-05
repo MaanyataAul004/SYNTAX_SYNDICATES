@@ -25,12 +25,14 @@ SECRET_KEY = '6ps8j!crjgrxt34cqbqn7x&b3y%(fny8k8nh21+qa)%ws3fh!q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'auctions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,8 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
 
 
 AUTHENTICATION_BACKENDS = [
@@ -157,3 +161,20 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SITE_ID = 1
+
+#1054804551779-vraqisem1ujqpvpsie7gflabh1j3pjc4.apps.googleusercontent.com
+#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
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+        
+    }
+}
