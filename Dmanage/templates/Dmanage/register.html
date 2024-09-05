@@ -1,14 +1,14 @@
 {% extends "Dmanage/layout.html" %}
 
 {% block body %}
-
-    <h2>Register</h2>
+<div class="registerpage2">
+    <h2 class="headingpage2">Register</h2>
 
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
 
-    <form action="{% url 'register' %}" method="post">
+    <form action="{% url 'register' %}" method="post" class="loginform">
         {% csrf_token %}
         <div class="form-group">
             <input class="form-control" autofocus type="text" name="username" placeholder="Username">
@@ -25,6 +25,10 @@
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
 
-    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    <div class="loginlast">
+    <pre class="loginlast2">Already Have an account : </pre> 
+    <a href="{% url 'login' %}" class="linkloginlast">Log In here.</a>
+    </div>
+</div>
 
 {% endblock %}
