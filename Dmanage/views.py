@@ -11,9 +11,30 @@ def index(request):
     return render(request,"Dmanage/index.html")
 
 
+# def login_view(request):
+#     if request.method == "POST":
+
+#         # Attempt to sign user in
+#         username = request.POST["username"]
+#         password = request.POST["password"]
+#         user = authenticate(request, username=username, password=password)
+
+#         # Check if authentication successful
+#         if user is not None:
+#             login(request, user)
+#             return HttpResponseRedirect(reverse("index"))
+#         else:
+#             return render(request, "Dmanage/login.html", {
+#                 "message": "Invalid username and/or password."
+#             })
+#     else:
+#         return render(request,"Dmanage/login.html")
+
+
+from django.contrib.auth.decorators import login_required
+
 def login_view(request):
     if request.method == "POST":
-
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
@@ -22,13 +43,14 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("post_login"))  # Redirect to post_login
         else:
             return render(request, "Dmanage/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request,"Dmanage/login.html")
+        return render(request, "Dmanage/login.html")
+
 
 
 def logout_view(request):
@@ -92,3 +114,12 @@ def about(request):
 def contact(request):
     # return HttpResponse ("CALL ME")
     return render(request, 'Dmanage/contact.html')
+
+# def post_login(request):
+#     return render(request,'Dmanage/post_login.html')
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def post_login(request):
+    return render(request, 'Dmanage/post_login.html')
